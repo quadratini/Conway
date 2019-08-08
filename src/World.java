@@ -1,29 +1,16 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 // a whirl
 public class World {
-    int size;
-    int[][] tiles;
+    private int size;
+    private int[][] tiles;
 
     public World(int size) {
         this.size = size;
-
-        tiles = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 1, 1, 0, 0, 0, 0, 0, 1, 1},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
-        };
+        tiles = createWorld();
     }
 
-    // generates randomized world
+    // Generates randomized world
     private int[][] createWorld() {
         int[][] tiles = new int[size][size];
 
@@ -36,13 +23,13 @@ public class World {
         return tiles;
     }
 
-    // change value of given cell
+    // Change value of given cell
     public void setCell(int x, int y, int value) {
         tiles[y][x] = value;
     }
 
-    // return given cell
-    public int getCell(int[][] tiles, int x, int y) {
+    // Return given cell
+    private int getCell(int[][] tiles, int x, int y) {
         return tiles[y][x];
     }
 
@@ -81,16 +68,21 @@ public class World {
             }
         }
         tiles = resultingWorld;
-        for (int i = 0; i < size; i++) {
-            System.out.println(Arrays.toString(resultingWorld[i]));
-        }
     }
 
-    public void makeDead(int[][] tiles, int i, int j) {
+    public int getSize() {
+        return size;
+    }
+
+    public int[][] getTiles() {
+        return tiles;
+    }
+
+    private void makeDead(int[][] tiles, int i, int j) {
         tiles[j][i] = 0;
     }
 
-    public void makeAlive(int[][] tiles, int i, int j) {
+    private void makeAlive(int[][] tiles, int i, int j) {
         tiles[j][i] = 1;
     }
 
@@ -99,7 +91,7 @@ public class World {
     }
 
     // Gets the values around the given cell
-    public int getLiveNeighbors(int[][] tiles, int cellX, int cellY) {
+    private int getLiveNeighbors(int[][] tiles, int cellX, int cellY) {
         ArrayList<Integer> neighbors = new ArrayList<>();
         int liveNeighbors = 0;
 

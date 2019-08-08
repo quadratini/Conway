@@ -3,15 +3,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Conway {
-    public static final int SIZE = 10;
+    private static final int SIZE = 150;
     public static void main(String[] args) {
         World ronpobWorld = new World(SIZE);
-
         Timer timer = new Timer();
-        ronpobWorld.displayWorld();
-
         JFrame frame = new JFrame("WHIRL");
         WorldFrame worldFrame = new WorldFrame(ronpobWorld);
+
         frame.add(worldFrame);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -20,14 +18,11 @@ public class Conway {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                frame.remove(worldFrame);
-                ronpobWorld.life();
-                ronpobWorld.displayWorld();
-                WorldFrame worldFrame = new WorldFrame(ronpobWorld);
-                frame.add(worldFrame);
-                frame.setVisible(true);
+                if (!worldFrame.paused) {
+                    ronpobWorld.life();
+                    worldFrame.repaint();
+                }
             }
-        }, 0, 200);
-
+        }, 0, 100);
     }
 }
